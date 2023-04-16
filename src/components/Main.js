@@ -2,6 +2,7 @@ import React from "react";
 import plus from "../images/plus.svg";
 import Api from "../utils/Api.js";
 import Card from "./Card.js";
+import pencil from "../images/pencil.svg";
 
 function Main(props) {
   const [userName, setUserName] = React.useState("");
@@ -34,8 +35,8 @@ function Main(props) {
           >
             <img
               className="gallery__newImage"
-              src="<%= require('../src/images/pencil.svg') %>"
-              alt=""
+              src={pencil}
+              alt="pencil"
             />
           </div>
 
