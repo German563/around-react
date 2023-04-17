@@ -1,14 +1,11 @@
 function Footer() {
-    return (
+  const currentYear = new Date().getFullYear();
 
-<footer className="footer">
-<p className="footer__copyright">© 2022 Around The U.S.</p>
-</footer>
-
+  return (
+    <footer className="footer">
+      <p className="footer__copyright">© {currentYear} Around The U.S.</p>
+    </footer>
   );
-  
 }
-export default Footer
 
-
-
+export default Footer;

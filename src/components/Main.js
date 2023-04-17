@@ -33,11 +33,7 @@ function Main(props) {
             style={{ backgroundImage: `url(${userAvatar})` }}
             onClick={props.onEditAvatar}
           >
-            <img
-              className="gallery__newImage"
-              src={pencil}
-              alt="pencil"
-            />
+            <img className="gallery__newImage" src={pencil} alt="pencil" />
           </div>
 
           <div className="gallery__wrapper gallery__eclipsis">
@@ -62,7 +58,7 @@ function Main(props) {
         </div>
       </section>
       <section className="card">
-        <ul class="card__area">
+        <ul className="card__area">
           {cards.map((item) => (
             <Card card={item} key={item._id} onCardClick={props.onCardClick} />
           ))}
