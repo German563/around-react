@@ -1,36 +1,21 @@
 import React from "react";
 import plus from "../images/plus.svg";
-import Api from "../utils/Api.js";
 import Card from "./Card.js";
 import pencil from "../images/pencil.svg";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function Main(props) {
-  const [userName, setUserName] = React.useState("");
-  const [userDescription, setUserDescription] = React.useState("");
-  const [userAvatar, setUserAvatar] = React.useState("");
-  const [cards, setCards] = React.useState([]);
+  const { cards } = props;
 
-  React.useEffect(() => {
-    Promise.all([Api.getProfileData(), Api.getInitialCards()])
-      .then((data) => {
-        const [userInfo, initialCards] = data;
-        const { name, about, avatar } = userInfo;
-        setUserName(name);
-        setUserDescription(about);
-        setUserAvatar(avatar);
-        setCards(initialCards);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+  const currentUser = React.useContext(CurrentUserContext);
+
   return (
     <main className="main">
       <section className="gallery">
         <div className="gallery__text">
           <div
             className="gallery__image"
-            style={{ backgroundImage: `url(${userAvatar})` }}
+            style={{ backgroundImage: `url(${currentUser.avatar})` }}
             onClick={props.onEditAvatar}
           >
             <img className="gallery__newImage" src={pencil} alt="pencil" />
@@ -38,7 +23,7 @@ function Main(props) {
 
           <div className="gallery__wrapper gallery__eclipsis">
             <div className="gallery__column">
-              <h1 className="gallery__header">{userDescription}</h1>
+              <h1 className="gallery__header">{currentUser.name}</h1>
 
               <button
                 className="gallery__pencil"
@@ -46,7 +31,7 @@ function Main(props) {
                 onClick={props.onEditProfile}
               ></button>
             </div>
-            <p className="gallery__subtext">{userName}</p>
+            <p className="gallery__subtext">{currentUser.about}</p>
           </div>
           <button
             className="gallery__button"
@@ -60,7 +45,13 @@ function Main(props) {
       <section className="card">
         <ul className="card__area">
           {cards.map((item) => (
-            <Card card={item} key={item._id} onCardClick={props.onCardClick} />
+            <Card
+              card={item}
+              key={item._id}
+              onCardClick={props.onCardClick}
+              onCardLike={props.onCardLike}
+              onCardDelete={props.onCardDelete}
+            />
           ))}
         </ul>
       </section>

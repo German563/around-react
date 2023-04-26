@@ -7,6 +7,7 @@ function PopupWithForm({
   title,
   children,
   submitButtonText,
+  onSubmit,
 }) {
   function handleOverlayClose(evt) {
     if (evt.target.classList.contains("page__background")) {
@@ -23,7 +24,7 @@ function PopupWithForm({
         }`}
       ></div>
       <div className={`popup ${isOpen ? "popup_opened" : ""}`}>
-        <form className="popup__container" name={name}>
+        <form className="popup__container" name={name} onSubmit={onSubmit}>
           <button type="button" className="popup__close" onClick={onClose} />
           <h2 className="popup__title">{title}</h2>
           {children}
