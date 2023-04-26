@@ -4,7 +4,7 @@ import Main from "./Main";
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm.js";
 import ImagePopup from "./ImagePopup.js";
-import Api from "../utils/Api.js";
+import Api from "../utils/api.js";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import EditProfilePopup from "./EditProfilePopup.js";
 import EditAvatarPopup from "./EditAvatarPopup.js";
@@ -153,7 +153,6 @@ function App() {
             onCardLike={handleCardLike}
             cards={cards}
             onCardDelete={handleCardDelete}
-            onClose={closeAllPopups}
           />
           <Footer />
           <ImagePopup
