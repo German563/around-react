@@ -1,50 +1,59 @@
-import React from "react";
-import CurrentUserContext from "../contexts/CurrentUserContext.js";
-import PopupWithForm from "./PopupWithForm.js";
+import React, { useState, useEffect } from "react"; 
+import CurrentUserContext from "../contexts/CurrentUserContext.js"; 
+import PopupWithForm from "./PopupWithForm.js"; 
 
-function AddPlacePopup(props) {
-  const [name, setName] = React.useState("");
-  const [link, setLink] = React.useState("");
+function AddPlacePopup(props) { 
+  const [name, setName] = useState(""); 
+  const [link, setLink] = useState(""); 
 
-  function handleSubmit(e) {
-    e.preventDefault();
+  useEffect(() => {
+    if (props.isOpen) {
+      setName("");
+      setLink("");
+    }
+  }, [props.isOpen]);
 
-    props.onAddPlace({
-      name,
-      link,
-    });
-    setName("");
-    setLink("");
-  }
+  function handleSubmit(e) { 
+    e.preventDefault(); 
+    props.onAddPlace({ 
+      name, 
+      link, 
+    }); 
+  } 
 
-  function handleChangeName(e) {
-    setName(e.target.value);
-  }
-  function handleChangeLink(e) {
-    setLink(e.target.value);
-  }
-  return (
-    <PopupWithForm
-      isOpen={props.isOpen}
-      onClose={props.onClose}
-      onSubmit={handleSubmit}
-      name="add-card"
-      title="New place"
-      submitButtonText="Save"
-    >
-      <input
-        className="popup__input"
-        type="text"
-        placeholder="Title"
-        onChange={handleChangeName}
-      />
-      <input
-        className="popup__input"
-        type="url"
-        placeholder="Image link"
-        onChange={handleChangeLink}
-      />
-    </PopupWithForm>
-  );
-}
-export default AddPlacePopup;
+  function handleChangeName(e) { 
+    setName(e.target.value); 
+  } 
+
+  function handleChangeLink(e) { 
+    setLink(e.target.value); 
+  } 
+
+  return ( 
+    <PopupWithForm 
+      isOpen={props.isOpen} 
+      onClose={props.onClose} 
+      onSubmit={handleSubmit} 
+      name="add-card" 
+      title="New place" 
+      submitButtonText="Save" 
+    > 
+      <input 
+        className="popup__input" 
+        type="text" 
+        placeholder="Title" 
+        value={name} 
+        onChange={handleChangeName} 
+      /> 
+      <input 
+        className="popup__input" 
+        type="url" 
+        placeholder="Image link" 
+        value={link} 
+        onChange={handleChangeLink} 
+      /> 
+    </PopupWithForm> 
+  ); 
+} 
+
+export default AddPlacePopup; 

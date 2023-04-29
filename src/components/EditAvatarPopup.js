@@ -2,6 +2,8 @@ import React from "react";
 import PopupWithForm from "./PopupWithForm";
 
 function EditAvatarPopup(props) {
+
+
   const avatarRef = React.useRef();
   function handleSubmit(e) {
     e.preventDefault();
@@ -24,6 +26,7 @@ function EditAvatarPopup(props) {
         type="url"
         name="avatar"
         placeholder="Avatars Image link"
+        required
         ref={avatarRef}
       />
     </PopupWithForm>

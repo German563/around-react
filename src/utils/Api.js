@@ -5,12 +5,12 @@ class Api {
     this._address = address;
     this._token = token;
   }
-
   _checkResponse(res) {
     if (res.ok) {
       return res.json();
-    }
-    return Promise.reject(`Error: ${res.status}`);
+    };
+    
+    return Promise.reject(`Error: ${res.status}`)
   }
 
   _request(url, options) {
@@ -68,7 +68,7 @@ class Api {
 
   removeLike(id) {
     return this._request(`${this._address}/cards/likes/${id}`, {
-      method: "DELETE",
+      method: "DELETE", 
       headers: {
         authorization: this._token,
         "Content-Type": "application/json",
