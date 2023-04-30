@@ -8,9 +8,9 @@ class Api {
   _checkResponse(res) {
     if (res.ok) {
       return res.json();
-    };
-    
-    return Promise.reject(`Error: ${res.status}`)
+    }
+
+    return Promise.reject(`Error: ${res.status}`);
   }
 
   _request(url, options) {
@@ -53,7 +53,7 @@ class Api {
         name: values.name,
         about: values.about,
       }),
-    }).then(this._checkResponse);
+    });
   }
 
   changeLikeCardStatus(id) {
@@ -63,17 +63,17 @@ class Api {
         authorization: this._token,
         "Content-Type": "application/json",
       },
-    }).then(this._checkResponse);
+    });
   }
 
   removeLike(id) {
     return this._request(`${this._address}/cards/likes/${id}`, {
-      method: "DELETE", 
+      method: "DELETE",
       headers: {
         authorization: this._token,
         "Content-Type": "application/json",
       },
-    }).then(this._checkResponse);
+    });
   }
 
   removeCard(id) {
@@ -83,7 +83,7 @@ class Api {
         authorization: this._token,
         "Content-Type": "application/json",
       },
-    }).then(this._checkResponse);
+    });
   }
 
   addNewCard(values) {
@@ -97,7 +97,7 @@ class Api {
         name: values.name,
         link: values.link,
       }),
-    }).then(this._checkResponse);
+    });
   }
 
   editAvatar(data) {
@@ -110,7 +110,7 @@ class Api {
       body: JSON.stringify({
         avatar: data.avatar,
       }),
-    }).then(this._checkResponse);
+    });
   }
 }
 

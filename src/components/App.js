@@ -17,12 +17,15 @@ function App() {
   const [selectedCard, setSelectedCard] = React.useState({});
   const [isBackPopupOpen, setBackPopupOpen] = React.useState(false);
 
-  const [currentUser, setCurrentUser] = React.useState({
-    avatar:
-      "https://sun6-23.userapi.com/impg/--m7YmJTmQMpm3h4nCZf4am7SBuzaaz7PymRqw/E262OcuUNr8.jpg?size=1024x1024&quality=95&sign=5cb59a271aa0029db51d1702c931eccc&type=album",
-    name: "Herman",
-    about: "Student",
-  }, []);
+  const [currentUser, setCurrentUser] = React.useState(
+    {
+      avatar:
+        "https://sun6-23.userapi.com/impg/--m7YmJTmQMpm3h4nCZf4am7SBuzaaz7PymRqw/E262OcuUNr8.jpg?size=1024x1024&quality=95&sign=5cb59a271aa0029db51d1702c931eccc&type=album",
+      name: "Herman",
+      about: "Student",
+    },
+    []
+  );
   React.useEffect(() => {
     Api.getProfileData()
       .then((user) => {
@@ -48,16 +51,18 @@ function App() {
     setBackPopupOpen(true);
   }
   function handleUpdateUser(user) {
-    const newName = user.name
-    const newAbout = user.about
     Api.editUserProfile(user)
-          .then(() => {
+      .then((updatedUser) => {
+        setCurrentUser(updatedUser);
+        closeAllPopups();
       })
-      .finally(() => setCurrentUser({ about: newAbout, name: newName, avatar: currentUser.avatar  }));
-      closeAllPopups()
+      .catch((error) => {
+        console.log("Error updating user:", error);
+      })
+      .finally((error) => {
+        console.log("Update user request completed.", error);
+      });
   }
-
-
 
   function closeAllPopups() {
     setEditAvatarPopupOpen(false);
@@ -77,31 +82,28 @@ function App() {
       .catch((err) => {
         console.log(err);
       });
-      
   }, []);
   React.useEffect(() => {
     const onEscape = (evt) => {
-      if (evt.key === 'Escape') {
-        closeAllPopups()
+      if (evt.key === "Escape") {
+        closeAllPopups();
       }
-    }
+    };
 
-    document.addEventListener('keydown', onEscape)
+    document.addEventListener("keydown", onEscape);
 
     return () => {
-      document.removeEventListener('keydown', onEscape)
-    }
-  }, [])
+      document.removeEventListener("keydown", onEscape);
+    };
+  }, []);
 
   function handleCardLike(card) {
     const isLiked = card.likes.some((user) => user._id === currentUser._id);
-    // Check one more time if this card was already liked
     function updateCards(newCard) {
       const newCards = cards.map((c) => (c._id === card._id ? newCard : c));
       setCards(newCards);
     }
     if (isLiked) {
-      debugger
       Api.removeLike(card._id)
         .then((newCard) => {
           updateCards(newCard);
@@ -115,8 +117,6 @@ function App() {
         .catch((err) => console.log(err));
     }
   }
-
-  
 
   function handleCardDelete(card) {
     const isOwn = card.owner._id === currentUser._id;
@@ -132,19 +132,12 @@ function App() {
     }
   }
 
-  function handleUpdateAvatar(data) {
-    Api.editAvatar(data)
-   
-    .then((data) => {
-      setCurrentUser({avatar: data})
-    })
-    .catch((err) => {
-      closeAllPopups()
-      console.log(err)
-    })
-}
-
-
+  function handleUpdateAvatar(avatar) {
+    Api.editAvatar(avatar)
+      .then((avatar) => setCurrentUser(avatar))
+      .catch((err) => console.log(err))
+      .finally(() => closeAllPopups());
+  }
 
   function handleAddCard(data) {
     Api.addNewCard(data)
