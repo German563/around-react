@@ -134,16 +134,20 @@ function App() {
 
   function handleUpdateAvatar(avatar) {
     Api.editAvatar(avatar)
-      .then((avatar) => setCurrentUser(avatar))
-      .catch((err) => console.log(err))
-      .finally(() => closeAllPopups());
+      .then((avatar) => {
+        setCurrentUser(avatar);
+        closeAllPopups();
+      })
+      .catch((err) => console.log(err));
   }
-
+  
   function handleAddCard(data) {
     Api.addNewCard(data)
-      .then((newCard) => setCards([newCard, ...cards]))
-      .catch((err) => console.log(err))
-      .finally(() => closeAllPopups());
+      .then((newCard) => {
+        setCards([newCard, ...cards]);
+        closeAllPopups();
+      })
+      .catch((err) => console.log(err));
   }
 
   return (

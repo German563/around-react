@@ -38,7 +38,7 @@ function Main(props) {
             onClick={props.onAddPlace}
             type="button"
           >
-            <img src={plus} alt="header__logo" />
+            <img src={plus} alt="plus icon" />
           </button>
         </div>
       </section>
